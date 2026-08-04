@@ -1,0 +1,168 @@
+/**
+ * Nexora Layout & Section Utilities
+ * Grid, spacing, and section background presets
+ */
+
+/* ─── Container ─── */
+
+.nexora-container {
+  width: 100%;
+  max-width: var(--nexora-container-max);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 2rem);
+}
+
+/* ─── Section Spacing ─── */
+
+.section-sm {
+  padding-block: var(--nexora-section-sm);
+  padding-inline: clamp(1rem, 4vw, 2rem);
+}
+
+.section-md {
+  padding-block: var(--nexora-section-md);
+  padding-inline: clamp(1rem, 4vw, 2rem);
+}
+
+.section-lg {
+  padding-block: var(--nexora-section-lg);
+  padding-inline: clamp(1rem, 4vw, 2rem);
+}
+
+.section-xl {
+  padding-block: var(--nexora-section-xl);
+  padding-inline: clamp(1rem, 4vw, 2rem);
+}
+
+/* ─── Section Backgrounds ─── */
+
+.section-hero {
+  background: var(--nexora-gradient-hero-bg);
+  color: var(--nexora-text-dark-primary);
+  position: relative;
+  overflow: hidden;
+}
+
+.section-hero::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: var(--nexora-gradient-hero-to-light);
+  pointer-events: none;
+}
+
+.section-light {
+  background: var(--nexora-light-900);
+  color: var(--nexora-text-light-primary);
+}
+
+.section-light-alt {
+  background: var(--nexora-light-950);
+  color: var(--nexora-text-light-primary);
+}
+
+.section-dark {
+  background: var(--nexora-gradient-section-dark);
+  color: var(--nexora-text-dark-primary);
+}
+
+/* ─── Hero Ambient Glow ─── */
+
+.hero-glow {
+  position: absolute;
+  inset: 0;
+  background: var(--nexora-gradient-glow-purple);
+  pointer-events: none;
+}
+
+/* ─── Grid Layouts ─── */
+
+.grid-hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .grid-hero {
+    grid-template-columns: 5fr 7fr;
+  }
+}
+
+.grid-features {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .grid-features {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-features {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.grid-benefits {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .grid-benefits {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-benefits {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+.grid-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .grid-stats {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.grid-contact {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .grid-contact {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ─── Reduced Motion ─── */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

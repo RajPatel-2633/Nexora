@@ -1,0 +1,96 @@
+/**
+ * Nexora Glassmorphism Utilities
+ * Apply via className — maps to config/glass.ts
+ */
+
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .glass-navbar {
+    background: var(--nexora-glass-bg-light);
+    backdrop-filter: blur(var(--nexora-glass-blur-lg)) saturate(180%);
+    -webkit-backdrop-filter: blur(var(--nexora-glass-blur-lg)) saturate(180%);
+    border-bottom: 1px solid var(--nexora-glass-border);
+    box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.04) inset;
+  }
+
+  .glass-mockup {
+    background: var(--nexora-glass-bg-subtle);
+    backdrop-filter: blur(var(--nexora-glass-blur-xl)) saturate(180%);
+    -webkit-backdrop-filter: blur(var(--nexora-glass-blur-xl)) saturate(180%);
+    border: 1px solid var(--nexora-glass-border);
+    box-shadow: var(--nexora-shadow-2xl), 0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+  }
+
+  .glass-panel {
+    background: var(--nexora-glass-bg-medium);
+    backdrop-filter: blur(var(--nexora-glass-blur-md));
+    -webkit-backdrop-filter: blur(var(--nexora-glass-blur-md));
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .glass-card-dark {
+    background: var(--nexora-glass-bg-light);
+    backdrop-filter: blur(var(--nexora-glass-blur-lg)) saturate(180%);
+    -webkit-backdrop-filter: blur(var(--nexora-glass-blur-lg)) saturate(180%);
+    border: 1px solid var(--nexora-glass-border);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+
+  .glass-form {
+    background: var(--nexora-glass-bg-light);
+    backdrop-filter: blur(var(--nexora-glass-blur-xl)) saturate(180%);
+    -webkit-backdrop-filter: blur(var(--nexora-glass-blur-xl)) saturate(180%);
+    border: 1px solid var(--nexora-glass-border);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+
+  .glass-button {
+    background: var(--nexora-glass-bg-light);
+    backdrop-filter: blur(var(--nexora-glass-blur-md));
+    -webkit-backdrop-filter: blur(var(--nexora-glass-blur-md));
+    border: 1px solid var(--nexora-glass-border);
+  }
+
+  .glass-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--nexora-border-dark-hover);
+  }
+}
+
+/** Fallback for browsers without backdrop-filter */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-navbar,
+  .glass-mockup,
+  .glass-panel,
+  .glass-card-dark,
+  .glass-form,
+  .glass-button {
+    background: rgba(15, 17, 23, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+}
+
+/** Gradient border shimmer (use with pseudo-element) */
+.glass-border-shimmer {
+  position: relative;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+}
+
+.glass-border-shimmer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.03) 50%,
+    rgba(255, 255, 255, 0.08) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}

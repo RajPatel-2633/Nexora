@@ -1,0 +1,12 @@
+@import "tailwindcss";
+@import "../styles/index.css";
+
+@theme {
+  --color-nexora-brand-500: #6366f1;
+  --color-nexora-brand-600: #4f46e5;
+  --color-nexora-dark-900: #050508;
+  --color-nexora-dark-850: #0b0d17;
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --z-index-navbar: 200;
+}
