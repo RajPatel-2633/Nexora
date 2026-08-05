@@ -1,10 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { pipelineStages } from "@/features/marketing/hero-data";
+import { pipelineStages, type PipelineStage } from "@/features/marketing/hero-data";
 import { fadeUpVariants } from "@/lib/animations/variants";
 
-export function HeroPipelineChart() {
+type HeroPipelineChartProps = {
+  stages?: PipelineStage[];
+};
+
+export function HeroPipelineChart({ stages = pipelineStages }: HeroPipelineChartProps) {
   return (
     <motion.div
       className="rounded-xl border border-black/[0.06] bg-white p-4 shadow-sm"
@@ -15,7 +19,7 @@ export function HeroPipelineChart() {
     >
       <h3 className="text-xs font-semibold text-gray-900">Sales Pipeline</h3>
       <div className="mt-3 space-y-2">
-        {pipelineStages.map((stage) => (
+        {stages.map((stage) => (
           <div key={stage.label} className="flex items-center gap-2">
             <span className="w-16 shrink-0 text-[10px] text-gray-500">
               {stage.label}

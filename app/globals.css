@@ -10,3 +10,8 @@
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
   --z-index-navbar: 200;
 }
+
+:root {
+  --navbar-height: 68px;
+  --hero-offset: calc(var(--navbar-height) + 24px);
+}

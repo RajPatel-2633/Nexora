@@ -10,6 +10,7 @@ import { HeroNotifications } from "./hero-notifications";
 import { useMouseParallax } from "@/hooks/animations/use-mouse-parallax";
 import { useFloatingAnimation } from "@/hooks/animations/use-floating-animation";
 import { useGsapScrollReveal } from "@/hooks/animations/use-gsap-scroll-reveal";
+import { useHeroGlow } from "@/hooks/animations/use-hero-glow";
 import { mockupVariants } from "@/lib/animations/variants";
 import { cn } from "@/lib/utils";
 
@@ -24,6 +25,7 @@ export function HeroVisual({ className }: { className?: string }) {
 
   useFloatingAnimation(floatRef, { y: 12, duration: 4, delay: 0.5 });
   useGsapScrollReveal(containerRef, { y: 60, scale: 0.95 });
+  useHeroGlow(glowRef);
   useMouseParallax(containerRef, [
     { ref: mockupRef, depth: 0.6 },
     { ref: glowRef, depth: 0.3 },

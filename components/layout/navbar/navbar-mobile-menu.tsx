@@ -2,11 +2,10 @@
 
 import { useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { NavbarLink } from "./navbar-link";
 import { NavbarCta } from "./navbar-cta";
+import { isNavLinkActive } from "@/hooks/ui/use-active-section";
 import type { NavConfig } from "@/config/navigation";
 
 type NavbarMobileMenuProps = {
@@ -16,18 +15,23 @@ type NavbarMobileMenuProps = {
   activeSection: string;
 };
 
-import { Variants } from "framer-motion";
-
 const menuVariants: Variants = {
   closed: {
     opacity: 0,
-    y: -8,
-    transition: { duration: 0.2, ease: [0.4, 0, 1, 1] as const },
+    transition: {
+      duration: 0.3,
+      staggerChildren: 0.05,
+      staggerDirection: -1,
+      when: "afterChildren",
+    },
   },
   open: {
     opacity: 1,
-    y: 0,
-    transition: { duration: 0.35, ease: [0, 0, 0.2, 1] as const },
+    transition: {
+      duration: 0.4,
+      ease: [0.16, 1, 0.3, 1], // easeOutExpo
+      when: "beforeChildren",
+    },
   },
 };
 
@@ -35,16 +39,17 @@ const listVariants: Variants = {
   closed: { opacity: 0 },
   open: {
     opacity: 1,
-    transition: { staggerChildren: 0.06, delayChildren: 0.08 },
+    transition: { staggerChildren: 0.08, delayChildren: 0.1 },
   },
 };
 
 const itemVariants: Variants = {
-  closed: { opacity: 0, x: -12 },
+  closed: { opacity: 0, y: 20, scale: 0.95 },
   open: {
     opacity: 1,
-    x: 0,
-    transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] as const },
+    y: 0,
+    scale: 1,
+    transition: { type: "spring", stiffness: 350, damping: 28 },
   },
 };
 
@@ -55,7 +60,6 @@ export function NavbarMobileMenu({
   activeSection,
 }: NavbarMobileMenuProps) {
   const menuRef = useRef<HTMLDivElement>(null);
-  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -67,7 +71,6 @@ export function NavbarMobileMenu({
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
-      closeButtonRef.current?.focus();
       document.addEventListener("keydown", handleKeyDown);
     } else {
       document.body.style.overflow = "";
@@ -83,18 +86,18 @@ export function NavbarMobileMenu({
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Backdrop */}
+          {/* Backdrop Blur Overlay */}
           <motion.div
-            className="fixed inset-0 z-[199] bg-black/60 backdrop-blur-sm lg:hidden"
+            className="fixed inset-0 z-[199] bg-black/40 backdrop-blur-md lg:hidden w-screen h-screen"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: 0.3 }}
             onClick={onClose}
             aria-hidden="true"
           />
 
-          {/* Panel */}
+          {/* Fullscreen Mobile Menu Panel */}
           <motion.div
             ref={menuRef}
             id="mobile-navigation"
@@ -102,79 +105,75 @@ export function NavbarMobileMenu({
             aria-modal="true"
             aria-label="Mobile navigation"
             className={cn(
-              "fixed inset-x-0 top-[80px] z-[201] lg:hidden",
-              "border-b border-white/10 bg-[#050508]/95 backdrop-blur-xl"
+              "fixed inset-0 z-[201] lg:hidden w-screen h-[100dvh]",
+              "bg-[#050508]/98 backdrop-blur-2xl flex flex-col justify-between pt-28 pb-12 px-6"
             )}
             variants={menuVariants}
             initial="closed"
             animate="open"
             exit="closed"
           >
-            <div className="nexora-container py-6">
-              <div className="mb-4 flex justify-end">
-                <button
-                  ref={closeButtonRef}
-                  type="button"
-                  onClick={onClose}
-                  className="rounded-lg p-2 text-white/70 outline-none transition-colors hover:bg-white/10 hover:text-white focus-visible:ring-2 focus-visible:ring-nexora-brand-500/50"
-                  aria-label="Close navigation menu"
-                >
-                  <X className="size-5" aria-hidden="true" />
-                </button>
-              </div>
-
-              <motion.nav
-                variants={listVariants}
-                initial="closed"
-                animate="open"
-                exit="closed"
-                aria-label="Mobile primary"
-              >
-                <ul className="flex flex-col gap-1" role="list">
-                  {navigation.links.map((link) => (
-                    <motion.li key={link.href} variants={itemVariants}>
-                      <NavbarLink
-                        link={link}
-                        activeSection={activeSection}
-                        onNavigate={onClose}
-                        className="block py-3 text-base"
-                      />
+            {/* Center Navigation Links */}
+            <motion.nav
+              variants={listVariants}
+              initial="closed"
+              animate="open"
+              exit="closed"
+              className="flex flex-col items-center justify-center flex-grow"
+              aria-label="Mobile primary"
+            >
+              <ul className="flex flex-col gap-6 items-center w-full" role="list">
+                {navigation.links.map((link) => {
+                  const isActive = isNavLinkActive(link.href, activeSection);
+                  
+                  return (
+                    <motion.li key={link.href} variants={itemVariants} className="w-full text-center">
+                      <Link
+                        href={link.href}
+                        onClick={onClose}
+                        className={cn(
+                          "relative inline-block text-3xl font-bold tracking-tight py-2 text-center transition-colors duration-300",
+                          isActive ? "text-brand-400" : "text-white/70 hover:text-white"
+                        )}
+                      >
+                        {link.label}
+                        {/* Dot indicator for active page */}
+                        {isActive && (
+                          <motion.span
+                            layoutId="mobileActiveDot"
+                            className="absolute -right-4 top-1/2 -translate-y-1/2 size-1.5 rounded-full bg-brand-500"
+                            transition={{ type: "spring", stiffness: 350, damping: 25 }}
+                          />
+                        )}
+                      </Link>
                     </motion.li>
-                  ))}
-                </ul>
-              </motion.nav>
+                  );
+                })}
+              </ul>
+            </motion.nav>
 
-              <motion.div
-                className="mt-8 border-t border-white/10 pt-6"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2, duration: 0.3 }}
+            {/* Bottom Actions */}
+            <motion.div
+              className="flex flex-col items-center gap-6 w-full max-w-xs mx-auto border-t border-white/5 pt-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.4 }}
+            >
+              <NavbarCta
+                label={navigation.cta.label}
+                href={navigation.cta.href}
+                onNavigate={onClose}
+                className="w-full text-center"
+              />
+              
+              <Link
+                href="/login"
+                className="text-white/50 text-sm tracking-wide hover:text-white/80 transition-colors"
+                onClick={onClose}
               >
-                <NavbarCta
-                  label={navigation.cta.label}
-                  href={navigation.cta.href}
-                  onNavigate={onClose}
-                  className="w-full justify-center"
-                />
-              </motion.div>
-
-              <motion.p
-                className="text-caption text-on-dark-muted mt-6 text-center"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.3 }}
-              >
-                <Link
-                  href="/login"
-                  className="text-white/50 underline-offset-4 hover:text-white/80 hover:underline"
-                  onClick={onClose}
-                >
-                  Sign in
-                </Link>
-                {" · "}
-                Enterprise-ready AI CRM
-              </motion.p>
-            </div>
+                Sign in to Nexora
+              </Link>
+            </motion.div>
           </motion.div>
         </>
       )}

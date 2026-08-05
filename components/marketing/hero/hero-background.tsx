@@ -1,9 +1,10 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { useHeroGlow } from "@/hooks/animations/use-hero-glow";
 import { useParticles } from "@/hooks/animations/use-particles";
 import { cn } from "@/lib/utils";
+import gsap from "gsap";
 
 export function HeroBackground({ className }: { className?: string }) {
   const glowRef = useRef<HTMLDivElement>(null);
@@ -11,7 +12,38 @@ export function HeroBackground({ className }: { className?: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useHeroGlow(glowRef);
+  useHeroGlow(glowSecondaryRef);
   useParticles(canvasRef);
+
+  useEffect(() => {
+    const g1 = glowRef.current;
+    const g2 = glowSecondaryRef.current;
+    if (!g1 || !g2) return;
+
+    // Slow drifting movement for gradient blobs
+    const drift1 = gsap.to(g1, {
+      x: "random(-40, 40)",
+      y: "random(-40, 40)",
+      duration: 10,
+      repeat: -1,
+      repeatRefresh: true,
+      ease: "sine.inOut",
+    });
+
+    const drift2 = gsap.to(g2, {
+      x: "random(-50, 50)",
+      y: "random(-50, 50)",
+      duration: 12,
+      repeat: -1,
+      repeatRefresh: true,
+      ease: "sine.inOut",
+    });
+
+    return () => {
+      drift1.kill();
+      drift2.kill();
+    };
+  }, []);
 
   return (
     <div

@@ -19,8 +19,8 @@ export type NavbarProps = {
 };
 
 export function Navbar({ navConfig = navigation, className }: NavbarProps) {
-  const { navRef, innerRef, isScrolled } = useNavbarScroll();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { navRef, glassRef, isScrolled } = useNavbarScroll(mobileOpen);
 
   const sectionIds = useMemo(
     () =>
@@ -49,21 +49,24 @@ export function Navbar({ navConfig = navigation, className }: NavbarProps) {
         Skip to main content
       </a>
 
+      {/* 1. Full-Width Header */}
       <header
         ref={navRef}
         className={cn(
-          "fixed inset-x-0 top-0 z-[200]",
-          "will-change-[height,backdrop-filter,background-color]",
-          "transition-[border-color] duration-300",
+          "fixed inset-x-0 top-0 w-full pointer-events-none",
+          "will-change-[height]",
           className
         )}
-        style={{ height: 80, zIndex: theme.zIndex.navbar }}
+        style={{ zIndex: mobileOpen ? 250 : theme.zIndex.navbar }}
       >
+        {/* Decoupled Glass Backdrop Card — Animates independently underneath from 0% opacity to floating glass card */}
         <div
-          ref={innerRef}
-          className="nexora-container flex h-full items-center justify-between"
-          style={{ transformOrigin: "center top" }}
-        >
+          ref={glassRef}
+          className="absolute inset-x-0 top-0 mx-auto pointer-events-none transition-all"
+        />
+
+        {/* Stable Content Grid — Anchored centered max-w-[1240px]. Navigation items NEVER shift horizontally while scrolling */}
+        <div className="relative z-10 w-full max-w-[1240px] mx-auto px-6 h-[68px] flex items-center justify-between pointer-events-auto">
           <NavbarLogo logo={navConfig.logo} isScrolled={isScrolled} />
 
           <nav
@@ -73,7 +76,6 @@ export function Navbar({ navConfig = navigation, className }: NavbarProps) {
             <NavbarLinks
               links={navConfig.links}
               activeSection={activeSection}
-              className="flex items-center gap-1"
             />
           </nav>
 
@@ -82,6 +84,7 @@ export function Navbar({ navConfig = navigation, className }: NavbarProps) {
               <NavbarCta
                 label={navConfig.cta.label}
                 href={navConfig.cta.href}
+                isScrolled={isScrolled}
               />
             </div>
 
@@ -93,15 +96,13 @@ export function Navbar({ navConfig = navigation, className }: NavbarProps) {
         </div>
       </header>
 
+      {/* Mobile Drawer Menu */}
       <NavbarMobileMenu
         isOpen={mobileOpen}
         onClose={closeMobile}
         navigation={navConfig}
         activeSection={activeSection}
       />
-
-      {/* Spacer to offset fixed navbar */}
-      <div className="h-20" aria-hidden="true" />
     </>
   );
 }

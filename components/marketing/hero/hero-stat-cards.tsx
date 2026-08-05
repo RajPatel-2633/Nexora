@@ -2,14 +2,19 @@
 
 import { motion } from "framer-motion";
 import { TrendingUp, TrendingDown } from "lucide-react";
-import { heroStats } from "@/features/marketing/hero-data";
+import { heroStats, type HeroStat } from "@/features/marketing/hero-data";
 import { scaleInVariants } from "@/lib/animations/variants";
 import { cn } from "@/lib/utils";
 
-export function HeroStatCards({ className }: { className?: string }) {
+type HeroStatCardsProps = {
+  stats?: HeroStat[];
+  className?: string;
+};
+
+export function HeroStatCards({ stats = heroStats, className }: HeroStatCardsProps) {
   return (
     <div className={cn("grid grid-cols-2 gap-2 lg:grid-cols-4 lg:gap-3", className)}>
-      {heroStats.map((stat, i) => (
+      {stats.map((stat, i) => (
         <motion.div
           key={stat.label}
           className="rounded-xl border border-black/[0.06] bg-white p-3 shadow-sm"

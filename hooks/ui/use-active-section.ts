@@ -47,7 +47,7 @@ export function useActiveSection(sectionIds: string[]) {
 /**
  * Returns whether a nav href matches the current active section or pathname.
  */
-export function useNavLinkActive(href: string, activeSection: string) {
+export function isNavLinkActive(href: string, activeSection: string) {
   const isHash = href.startsWith("#");
   const sectionId = isHash ? href.slice(1) : "";
 
@@ -56,4 +56,8 @@ export function useNavLinkActive(href: string, activeSection: string) {
   }
 
   return false;
+}
+
+export function useNavLinkActive(href: string, activeSection: string) {
+  return isNavLinkActive(href, activeSection);
 }

@@ -2,8 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Bell, UserPlus, Trophy } from "lucide-react";
-import { notifications } from "@/features/marketing/hero-data";
-import { floatingCardVariants } from "@/lib/animations/variants";
+import { notifications, type Notification } from "@/features/marketing/hero-data";
 import { cn } from "@/lib/utils";
 
 const iconMap = {
@@ -18,28 +17,43 @@ const colorMap = {
   invoice: "bg-violet-50 text-violet-600",
 };
 
-export function HeroNotifications({ className }: { className?: string }) {
+type HeroNotificationsProps = {
+  data?: Notification[];
+  className?: string;
+};
+
+export function HeroNotifications({ data = notifications, className }: HeroNotificationsProps) {
   return (
     <motion.div
       className={cn(
         "absolute -right-2 top-16 z-20 w-56 rounded-xl border border-black/[0.06] bg-white p-3 shadow-lg sm:-right-4 sm:w-64",
         className
       )}
-      variants={floatingCardVariants}
-      initial="initial"
-      animate="animate"
-      transition={{ delay: 1.2 }}
+      initial={{ opacity: 0, scale: 0.9, y: 20 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      transition={{ delay: 1.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
     >
+      <motion.div
+        animate={{
+          y: [-5, 5, -5],
+          rotate: [-0.5, 0.5, -0.5],
+        }}
+        transition={{
+          repeat: Infinity,
+          duration: 5,
+          ease: "easeInOut",
+        }}
+      >
       <div className="mb-2 flex items-center justify-between">
         <span className="text-[11px] font-semibold text-gray-900">
           Notifications
         </span>
         <span className="flex size-4 items-center justify-center rounded-full bg-[#6366F1] text-[9px] font-bold text-white">
-          2
+          {data.length}
         </span>
       </div>
       <div className="space-y-2">
-        {notifications.map((n) => {
+        {data.map((n) => {
           const Icon = iconMap[n.type];
           return (
             <div
@@ -65,6 +79,7 @@ export function HeroNotifications({ className }: { className?: string }) {
           );
         })}
       </div>
+      </motion.div>
     </motion.div>
   );
 }

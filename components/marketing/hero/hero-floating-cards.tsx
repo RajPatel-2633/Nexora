@@ -1,10 +1,6 @@
-"use client";
-
-import { useRef } from "react";
 import { motion } from "framer-motion";
 import { TrendingUp, Users } from "lucide-react";
 import { floatingCards } from "@/features/marketing/hero-data";
-import { useFloatingAnimation } from "@/hooks/animations/use-floating-animation";
 import { cn } from "@/lib/utils";
 
 const positionClasses = {
@@ -34,35 +30,38 @@ function FloatingCard({
   position,
   delay = 0,
 }: FloatingCardProps) {
-  const ref = useRef<HTMLDivElement>(null);
   const Icon = icons[id as keyof typeof icons] ?? TrendingUp;
-
-  useFloatingAnimation(ref, {
-    y: position === "top-right" ? 8 : 6,
-    duration: 3.5 + delay,
-    delay,
-    rotation: position === "bottom-left" ? 1 : -1,
-  });
 
   return (
     <motion.div
-      ref={ref}
       className={cn(
         positionClasses[position],
         "w-36 rounded-xl border border-black/[0.06] bg-white p-3 shadow-lg sm:w-40"
       )}
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay: 0.8 + delay, duration: 0.5 }}
+      initial={{ opacity: 0, scale: 0.9, y: 15 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      transition={{ delay: 0.8 + delay, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
     >
-      <div className="flex items-center gap-2">
-        <div className="flex size-7 items-center justify-center rounded-lg bg-[#EEF2FF]">
-          <Icon className="size-3.5 text-[#6366F1]" aria-hidden="true" />
+      <motion.div
+        animate={{
+          y: position === "top-right" ? [4, -4, 4] : [-4, 4, -4],
+          rotate: position === "bottom-left" ? [0.5, -0.5, 0.5] : [-0.5, 0.5, -0.5],
+        }}
+        transition={{
+          repeat: Infinity,
+          duration: 4 + delay,
+          ease: "easeInOut",
+        }}
+      >
+        <div className="flex items-center gap-2">
+          <div className="flex size-7 items-center justify-center rounded-lg bg-[#EEF2FF]">
+            <Icon className="size-3.5 text-[#6366F1]" aria-hidden="true" />
+          </div>
+          <span className="text-[9px] font-medium text-gray-500">{label}</span>
         </div>
-        <span className="text-[9px] font-medium text-gray-500">{label}</span>
-      </div>
-      <p className="mt-1.5 text-base font-bold text-gray-900">{value}</p>
-      <p className="text-[9px] font-medium text-emerald-600">{change}</p>
+        <p className="mt-1.5 text-base font-bold text-gray-900">{value}</p>
+        <p className="text-[9px] font-medium text-emerald-600">{change}</p>
+      </motion.div>
     </motion.div>
   );
 }

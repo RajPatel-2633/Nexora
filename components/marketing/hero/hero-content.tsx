@@ -54,7 +54,13 @@ export function HeroContent({ className }: { className?: string }) {
 
       <motion.p
         className="text-lead text-on-dark-muted mt-6 max-w-lg"
-        variants={heroItemVariants}
+        variants={{
+          hidden: { opacity: 0 },
+          visible: {
+            opacity: 1,
+            transition: { duration: 0.8, ease: "easeOut" }
+          }
+        }}
       >
         {heroContent.description}
       </motion.p>

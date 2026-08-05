@@ -9,7 +9,7 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="section-hero relative flex min-h-screen items-center overflow-hidden pb-16 pt-28 lg:pb-24 lg:pt-32"
+      className="section-hero relative flex min-h-screen items-center overflow-hidden pb-16 pt-[var(--hero-offset)] lg:pb-24"
       aria-labelledby="hero-heading"
     >
       <HeroBackground />

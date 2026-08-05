@@ -10,12 +10,14 @@ export type NavbarScrollState = {
 };
 
 /**
- * GSAP-powered scroll hook for Linear-style navbar transitions.
- * Interpolates height, blur, and opacity with smooth easing.
+ * GSAP-powered scroll hook for Linear/Stripe/Vercel navbar transitions.
+ * Decouples the morphing glass background card from the anchored navigation content.
+ * Content stays anchored in a stable 1240px centered grid without horizontal shifting.
+ * Glass Backdrop: Animates from 0% opacity (attached top, 8px radius) to floating glass card (10px margin, 22px radius, 1240px max-width, 20px blur).
  */
-export function useNavbarScroll() {
+export function useNavbarScroll(mobileOpen: boolean = false) {
   const navRef = useRef<HTMLElement>(null);
-  const innerRef = useRef<HTMLDivElement>(null);
+  const glassRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef({ value: 0 });
   const tweenRef = useRef<gsap.core.Tween | null>(null);
 
@@ -26,43 +28,90 @@ export function useNavbarScroll() {
 
   const applyProgress = useCallback((progress: number) => {
     const nav = navRef.current;
-    const inner = innerRef.current;
-    if (!nav || !inner) return;
+    const glass = glassRef.current;
+    if (!nav || !glass) return;
+
+    if (mobileOpen) {
+      // Force transparent header when mobile menu is open
+      nav.style.height = "68px";
+      glass.style.height = "68px";
+      glass.style.width = "100%";
+      glass.style.maxWidth = "100%";
+      glass.style.marginTop = "0px";
+      glass.style.backgroundColor = "transparent";
+      glass.style.backdropFilter = "none";
+      (glass.style as any).webkitBackdropFilter = "none";
+      glass.style.border = "none";
+      glass.style.boxShadow = "none";
+      return;
+    }
 
     const p = gsap.utils.clamp(0, 1, progress);
-    const height = gsap.utils.interpolate(80, 64, p);
-    const bgOpacity = gsap.utils.interpolate(0, 0.72, p);
-    const blur = gsap.utils.interpolate(0, 16, p);
-    const borderOpacity = gsap.utils.interpolate(0, 0.08, p);
-    const shadowOpacity = gsap.utils.interpolate(0, 0.06, p);
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 1024;
+    
+    if (isMobile) {
+      // Mobile behavior: standard sticky header
+      const height = gsap.utils.interpolate(68, 60, p);
+      const bgOpacity = gsap.utils.interpolate(0, 0.90, p);
+      const blur = gsap.utils.interpolate(0, 16, p);
+      const borderOpacity = gsap.utils.interpolate(0, 0.08, p);
 
-    nav.style.height = `${height}px`;
-    nav.style.backgroundColor = `rgba(5, 5, 8, ${bgOpacity})`;
-    nav.style.backdropFilter =
-      p > 0.01 ? `blur(${blur}px) saturate(180%)` : "none";
-    (nav.style as any).webkitBackdropFilter =
-      p > 0.01 ? `blur(${blur}px) saturate(180%)` : "none";
-    nav.style.boxShadow = `0 1px 0 0 rgba(255, 255, 255, ${shadowOpacity}) inset`;
-    nav.style.borderBottom = `1px solid rgba(255, 255, 255, ${borderOpacity})`;
+      nav.style.height = `${height}px`;
+      glass.style.height = `${height}px`;
+      glass.style.width = "100%";
+      glass.style.maxWidth = "100%";
+      glass.style.marginTop = "0px";
+      glass.style.borderRadius = "0px";
+      glass.style.backgroundColor = `rgba(10, 12, 20, ${bgOpacity})`;
+      glass.style.backdropFilter = p > 0.01 ? `blur(${blur}px) saturate(180%)` : "none";
+      (glass.style as any).webkitBackdropFilter = p > 0.01 ? `blur(${blur}px) saturate(180%)` : "none";
+      glass.style.borderBottom = `1px solid rgba(255, 255, 255, ${borderOpacity})`;
+      glass.style.boxShadow = "none";
+    } else {
+      // Desktop behavior: Glass backdrop card morphs independently underneath anchored 1240px content
+      const navHeight = 78;
+      const cardHeight = gsap.utils.interpolate(68, 60, p);
+      const cardWidth = gsap.utils.interpolate(98, 94, p);
+      const cardMaxW = gsap.utils.interpolate(1320, 1240, p);
+      const marginTop = gsap.utils.interpolate(0, 10, p);
+      const bgOpacity = gsap.utils.interpolate(0, 0.60, p);
+      const blur = gsap.utils.interpolate(0, 20, p);
+      // Initial 8px radius -> 22px rounded glass card (NO translateY movement!)
+      const borderRadius = gsap.utils.interpolate(8, 22, p);
+      const borderOpacity = gsap.utils.interpolate(0, 0.08, p);
+      const shadow1Opacity = gsap.utils.interpolate(0, 0.16, p);
+      const shadow2Opacity = gsap.utils.interpolate(0, 0.06, p);
 
-    inner.style.transform = `scale(${gsap.utils.interpolate(1, 0.98, p)})`;
-  }, []);
+      nav.style.height = `${navHeight}px`;
+
+      glass.style.height = `${cardHeight}px`;
+      glass.style.width = `${cardWidth}%`;
+      glass.style.maxWidth = `${cardMaxW}px`;
+      glass.style.marginTop = `${marginTop}px`;
+      glass.style.transform = "none"; // NO translateY movement
+      glass.style.backgroundColor = `rgba(10, 12, 20, ${bgOpacity})`;
+      glass.style.backdropFilter = p > 0.01 ? `blur(${blur}px) saturate(180%)` : "none";
+      (glass.style as any).webkitBackdropFilter = p > 0.01 ? `blur(${blur}px) saturate(180%)` : "none";
+      glass.style.borderRadius = `${borderRadius}px`;
+      glass.style.border = `1px solid rgba(255, 255, 255, ${borderOpacity})`;
+      glass.style.boxShadow = p > 0.01 
+        ? `0 8px 30px rgba(0, 0, 0, ${shadow1Opacity}), 0 2px 8px rgba(0, 0, 0, ${shadow2Opacity})` 
+        : "none";
+    }
+  }, [mobileOpen]);
 
   useEffect(() => {
-    applyProgress(0);
+    applyProgress(progressRef.current.value);
 
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      const target = gsap.utils.clamp(
-        0,
-        1,
-        scrollY / (NAVBAR_SCROLL_THRESHOLD * 4)
-      );
+      // Progressive 80px scroll range
+      const target = gsap.utils.clamp(0, 1, scrollY / 80);
 
       tweenRef.current?.kill();
       tweenRef.current = gsap.to(progressRef.current, {
         value: target,
-        duration: 0.45,
+        duration: 0.35,
         ease: "power2.out",
         overwrite: true,
         onUpdate: () => applyProgress(progressRef.current.value),
@@ -75,13 +124,15 @@ export function useNavbarScroll() {
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll);
     handleScroll();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
       tweenRef.current?.kill();
     };
-  }, [applyProgress]);
+  }, [applyProgress, mobileOpen]);
 
-  return { navRef, innerRef, ...state };
+  return { navRef, glassRef, ...state };
 }

@@ -4,7 +4,16 @@ import { motion } from "framer-motion";
 import { revenueData } from "@/features/marketing/hero-data";
 import { fadeUpVariants } from "@/lib/animations/variants";
 
-function buildPath(data: typeof revenueData, width: number, height: number) {
+type RevenueDataPoint = {
+  month: string;
+  value: number;
+};
+
+type HeroRevenueChartProps = {
+  data?: RevenueDataPoint[];
+};
+
+function buildPath(data: RevenueDataPoint[], width: number, height: number) {
   const max = Math.max(...data.map((d) => d.value));
   const padding = 8;
   const innerW = width - padding * 2;
@@ -24,10 +33,10 @@ function buildPath(data: typeof revenueData, width: number, height: number) {
   return { line, area, points };
 }
 
-export function HeroRevenueChart() {
+export function HeroRevenueChart({ data = revenueData }: HeroRevenueChartProps) {
   const w = 280;
   const h = 120;
-  const { line, area, points } = buildPath(revenueData, w, h);
+  const { line, area, points } = buildPath(data, w, h);
 
   return (
     <motion.div

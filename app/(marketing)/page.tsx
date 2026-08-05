@@ -5,6 +5,7 @@ import { DashboardPreviewSection } from "@/components/marketing/sections/dashboa
 import { IntegrationsSection } from "@/components/marketing/sections/integrations-section";
 import { WhyChooseSection } from "@/components/marketing/sections/why-choose-section";
 import { TestimonialsSection } from "@/components/marketing/sections/testimonials-section";
+import { PricingSection } from "@/components/marketing/sections/pricing-section";
 import { ContactSection } from "@/components/marketing/sections/contact-section";
 
 export default function HomePage() {
@@ -24,11 +25,7 @@ export default function HomePage() {
 
       <TestimonialsSection />
 
-      <section id="pricing" className="section-light section-md">
-        <div className="nexora-container">
-          <h2 className="text-h2 text-on-light">Pricing</h2>
-        </div>
-      </section>
+      <PricingSection />
 
       <ContactSection />
     </>

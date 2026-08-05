@@ -4,6 +4,7 @@ import { HeroDashboardSidebar } from "./hero-dashboard-sidebar";
 import { HeroStatCards } from "./hero-stat-cards";
 import { HeroPipelineChart } from "./hero-pipeline-chart";
 import { HeroRevenueChart } from "./hero-revenue-chart";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 export function HeroDashboardMockup({ className }: { className?: string }) {
@@ -30,8 +31,19 @@ export function HeroDashboardMockup({ className }: { className?: string }) {
         <HeroStatCards className="mb-3" />
 
         <div className="grid gap-3 lg:grid-cols-2">
-          <HeroPipelineChart />
-          <HeroRevenueChart />
+          <motion.div
+            animate={{ y: [1.5, -1.5, 1.5], rotate: [0.1, -0.1, 0.1] }}
+            transition={{ repeat: Infinity, duration: 5.5, ease: "easeInOut" }}
+          >
+            <HeroPipelineChart />
+          </motion.div>
+
+          <motion.div
+            animate={{ y: [-1.5, 1.5, -1.5], rotate: [-0.1, 0.1, -0.1] }}
+            transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+          >
+            <HeroRevenueChart />
+          </motion.div>
         </div>
       </div>
     </div>

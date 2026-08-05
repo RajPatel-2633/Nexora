@@ -1,158 +1,298 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { motion, useAnimationControls } from "framer-motion";
-import { Star, Quote } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { motion } from "framer-motion";
+import { Sparkles } from "lucide-react";
+import { TestimonialCard } from "./testimonial-card";
+import type { Testimonial, TrustMetric } from "@/types/domain/testimonial";
 
-const testimonials = [
-  { 
-    quote: "Nexora CRM has completely transformed the way we handle our leads and operations. Our team is more productive and our conversions are up 35%!", 
-    name: "Rahul Sharma", 
-    role: "CEO, UrbanBuild Realty", 
-    initials: "RS", 
-    company: "UrbanBuild", 
-    color: "bg-blue-500",
-    gradient: "from-blue-500/20 to-blue-500/0"
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
+// 9. Typed Testimonials Data Array (Backend Compatibility Ready)
+const testimonials: Testimonial[] = [
+  {
+    id: "1",
+    quote: "Nexora CRM has completely transformed the way we handle our leads and operations. Our team is more productive and our conversions are up 35%!",
+    name: "Rahul Sharma",
+    role: "CEO, UrbanBuild Realty",
+    company: "UrbanBuild",
+    initials: "RS",
+    rating: 5,
+    avatarGradient: "from-blue-600 via-indigo-600 to-violet-700",
+    accentColor: "text-blue-400",
+    glowColor: "rgba(59,130,246,0.25)",
+    cardGradient: "from-blue-500/15 via-indigo-500/5 to-transparent",
+    minHeight: "min-h-[320px]",
   },
-  { 
-    quote: "The HRMS features are incredible. Managing attendance and payroll used to take our HR team days, now it takes hours. Highly recommended.", 
-    name: "Priya Verma", 
-    role: "HR Director, TechNova", 
-    initials: "PV", 
-    company: "TechNova", 
-    color: "bg-emerald-500",
-    gradient: "from-emerald-500/20 to-emerald-500/0"
+  {
+    id: "2",
+    quote: "The HRMS features are incredible. Managing attendance and payroll used to take our HR team days, now it takes hours. Highly recommended.",
+    name: "Priya Verma",
+    role: "HR Director, TechNova",
+    company: "TechNova",
+    initials: "PV",
+    rating: 5,
+    avatarGradient: "from-emerald-600 via-teal-600 to-cyan-700",
+    accentColor: "text-emerald-400",
+    glowColor: "rgba(16,185,129,0.25)",
+    cardGradient: "from-emerald-500/15 via-teal-500/5 to-transparent",
+    minHeight: "min-h-[360px]",
   },
-  { 
-    quote: "We scaled our operations 10x using their pipeline management. The automated invoicing alone paid for the platform in the first month.", 
-    name: "Amit Patel", 
-    role: "Founder, Skyline Dev", 
-    initials: "AP", 
-    company: "Skyline", 
-    color: "bg-amber-500",
-    gradient: "from-amber-500/20 to-amber-500/0"
+  {
+    id: "3",
+    quote: "We scaled our operations 10x using their pipeline management. The automated invoicing alone paid for the platform in the first month.",
+    name: "Amit Patel",
+    role: "Founder, Skyline Dev",
+    company: "Skyline",
+    initials: "AP",
+    rating: 5,
+    avatarGradient: "from-amber-500 via-orange-600 to-red-600",
+    accentColor: "text-amber-400",
+    glowColor: "rgba(245,158,11,0.25)",
+    cardGradient: "from-amber-500/15 via-orange-500/5 to-transparent",
+    minHeight: "min-h-[310px]",
   },
-  { 
-    quote: "Customer support is top notch. They helped us migrate from our legacy CRM in under a week with zero downtime. Phenomenal experience.", 
-    name: "Sneha Rao", 
-    role: "Operations Head, GreenLeaf", 
-    initials: "SR", 
-    company: "GreenLeaf", 
-    color: "bg-purple-500",
-    gradient: "from-purple-500/20 to-purple-500/0"
+  {
+    id: "4",
+    quote: "Customer support is top notch. They helped us migrate from our legacy CRM in under a week with zero downtime. Phenomenal experience.",
+    name: "Sneha Rao",
+    role: "Operations Head, GreenLeaf",
+    company: "GreenLeaf",
+    initials: "SR",
+    rating: 5,
+    avatarGradient: "from-purple-600 via-fuchsia-600 to-pink-600",
+    accentColor: "text-purple-400",
+    glowColor: "rgba(168,85,247,0.25)",
+    cardGradient: "from-purple-500/15 via-fuchsia-500/5 to-transparent",
+    minHeight: "min-h-[345px]",
   },
-  { 
-    quote: "The real-time analytics dashboard is a game-changer. We finally have a single source of truth for all our business metrics.", 
-    name: "Vikram Singh", 
-    role: "VP Sales, PrimeSpace", 
-    initials: "VS", 
-    company: "PrimeSpace", 
-    color: "bg-rose-500",
-    gradient: "from-rose-500/20 to-rose-500/0"
+  {
+    id: "5",
+    quote: "The real-time analytics dashboard is a game-changer. We finally have a single source of truth for all our business metrics.",
+    name: "Vikram Singh",
+    role: "VP Sales, PrimeSpace",
+    company: "PrimeSpace",
+    initials: "VS",
+    rating: 5,
+    avatarGradient: "from-rose-600 via-pink-600 to-red-700",
+    accentColor: "text-rose-400",
+    glowColor: "rgba(244,63,94,0.25)",
+    cardGradient: "from-rose-500/15 via-pink-500/5 to-transparent",
+    minHeight: "min-h-[330px]",
   },
 ];
 
-// Double the array for seamless infinite looping
-const duplicatedTestimonials = [...testimonials, ...testimonials];
+// 3. Trust Metrics Data Definition
+const trustMetrics: TrustMetric[] = [
+  { id: "1", label: "Trusted Businesses", value: 2500, suffix: "+" },
+  { id: "2", label: "Customer Satisfaction", value: 98, suffix: "%" },
+  { id: "3", label: "Leads Managed", value: 50, suffix: "M+" },
+  { id: "4", label: "Platform Uptime", value: 99.9, suffix: "%", isDecimal: true },
+];
 
-export function TestimonialsSection() {
-  const controls = useAnimationControls();
-  const trackRef = useRef<HTMLDivElement>(null);
+// Triplicate array for smooth infinite marquee looping without reset jumps
+const triplicatedTestimonials = [...testimonials, ...testimonials, ...testimonials];
+
+// GSAP Count-up component for Trust Metrics
+function GSAPTrustCounter({ metric, containerRef }: { metric: TrustMetric; containerRef: React.RefObject<HTMLDivElement | null> }) {
+  const [displayValue, setDisplayValue] = useState("0");
 
   useEffect(() => {
-    controls.start({
-      x: ["0%", "-50%"],
-      transition: {
-        duration: 40,
-        ease: "linear",
-        repeat: Infinity,
-      }
-    });
-  }, [controls]);
+    if (!containerRef.current) return;
 
-  // Hover functions removed to fix unused variable warning, relies on Framer motion whileHover instead
+    const ctx = gsap.context(() => {
+      const targetObj = { val: 0 };
+      gsap.to(targetObj, {
+        val: metric.value,
+        duration: 2.2,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        },
+        onUpdate: () => {
+          if (metric.isDecimal) {
+            setDisplayValue(targetObj.val.toFixed(1));
+          } else if (metric.value >= 1000) {
+            setDisplayValue(Math.round(targetObj.val).toLocaleString());
+          } else {
+            setDisplayValue(Math.round(targetObj.val).toString());
+          }
+        },
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, [metric, containerRef]);
+
+  return <span>{displayValue}</span>;
+}
+
+export function TestimonialsSection() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const marqueeTweenRef = useRef<gsap.core.Tween | null>(null);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  // 10. Check for prefers-reduced-motion accessibility preference
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setPrefersReducedMotion(mediaQuery.matches);
+
+    const handleChange = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
+    mediaQuery.addEventListener?.("change", handleChange);
+    return () => mediaQuery.removeEventListener?.("change", handleChange);
+  }, []);
+
+  // 1. GSAP Powered Infinite Marquee Loop
+  useEffect(() => {
+    if (prefersReducedMotion || !trackRef.current) return;
+
+    const ctx = gsap.context(() => {
+      // Create seamless horizontal marquee tween moving -33.333% (1 full set out of 3)
+      marqueeTweenRef.current = gsap.to(trackRef.current, {
+        xPercent: -33.33333,
+        ease: "none",
+        duration: 35,
+        repeat: -1,
+      });
+    }, trackRef);
+
+    return () => ctx.revert();
+  }, [prefersReducedMotion]);
+
+  // 6. Variable Marquee Speed Controls
+  const handleTrackMouseEnter = () => {
+    if (marqueeTweenRef.current) {
+      gsap.to(marqueeTweenRef.current, { timeScale: 0.35, duration: 0.6, ease: "power2.out" });
+    }
+  };
+
+  const handleCardHoverStart = () => {
+    if (marqueeTweenRef.current) {
+      gsap.to(marqueeTweenRef.current, { timeScale: 0, duration: 0.4, ease: "power2.out" });
+    }
+  };
+
+  const handleCardHoverEnd = () => {
+    if (marqueeTweenRef.current) {
+      gsap.to(marqueeTweenRef.current, { timeScale: 0.35, duration: 0.4, ease: "power2.out" });
+    }
+  };
+
+  const handleTrackMouseLeave = () => {
+    if (marqueeTweenRef.current) {
+      gsap.to(marqueeTweenRef.current, { timeScale: 1, duration: 0.8, ease: "power2.out" });
+    }
+  };
 
   return (
-    <section id="testimonials" className="section-dark section-md relative overflow-hidden bg-brand-950 text-white">
-      {/* Background Glows */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-brand-500/20 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-violet-500/20 rounded-full blur-[120px] pointer-events-none" />
+    <section ref={sectionRef} id="testimonials" className="section-dark section-md relative overflow-hidden bg-brand-950 text-white">
+      {/* Background Radial Glows */}
+      <div className="absolute top-0 left-1/4 size-96 bg-brand-500/15 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 size-96 bg-violet-500/15 rounded-full blur-[120px] pointer-events-none" />
 
-      <div className="nexora-container relative z-10 mb-16 md:mb-24 text-center max-w-3xl mx-auto">
-        <h2 className="text-sm font-semibold text-brand-400 tracking-wider uppercase mb-3">Testimonials</h2>
-        <h3 className="text-h2 text-white mb-6">Loved by thousands of businesses</h3>
-        <p className="text-lg text-white/60">
-          See how Nexora is helping teams around the world simplify their operations and grow their business.
-        </p>
-      </div>
-
-      <div className="relative w-full overflow-hidden flex py-10 group/carousel">
-        
-        {/* Gradient Masks */}
-        <div className="absolute inset-y-0 left-0 w-16 md:w-48 bg-gradient-to-r from-brand-950 to-transparent z-20 pointer-events-none" />
-        <div className="absolute inset-y-0 right-0 w-16 md:w-48 bg-gradient-to-l from-brand-950 to-transparent z-20 pointer-events-none" />
-
-        {/* Carousel Track */}
-        <motion.div 
-          ref={trackRef}
-          className="flex gap-6 md:gap-8 px-4"
-          animate={controls}
-          // Slow down the animation slightly when hovering the carousel
-          whileHover={{ animationPlayState: "paused" }} // CSS trick doesn't work perfectly with Framer, but we can rely on card hover
+      <div className="nexora-container relative z-10 mb-12 md:mb-16 text-center max-w-4xl mx-auto">
+        {/* Section Badge */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-xs font-semibold uppercase tracking-wider mb-4"
         >
-          {duplicatedTestimonials.map((testimonial, idx) => (
-            <motion.div
-              key={idx}
-              whileHover={{ scale: 1.05, y: -10 }}
-              className="relative w-[300px] sm:w-[350px] md:w-[400px] shrink-0"
-            >
-              {/* Glass Card */}
-              <div className="relative h-full flex flex-col rounded-3xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur-xl shadow-2xl overflow-hidden group">
-                
-                {/* Subtle gradient splash inside card */}
-                <div className={cn("absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br", testimonial.gradient)} />
-                
-                <Quote className="absolute top-6 right-6 size-12 text-white/5" />
+          <Sparkles className="size-3.5" />
+          <span>Customer Stories</span>
+        </motion.div>
 
-                {/* Animated Stars */}
-                <div className="mb-6 flex gap-1">
-                  {[...Array(5)].map((_, i) => (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, scale: 0 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: i * 0.1, type: "spring", stiffness: 300, damping: 20 }}
-                    >
-                      <Star className="size-4 fill-amber-400 text-amber-400" />
-                    </motion.div>
-                  ))}
-                </div>
+        <motion.h3
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="text-h2 text-white mb-6"
+        >
+          Loved by thousands of fast-growing businesses
+        </motion.h3>
 
-                <p className="mb-8 text-lg text-white/90 leading-relaxed font-medium flex-grow relative z-10">
-                  &quot;{testimonial.quote}&quot;
-                </p>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="text-lg text-white/60 max-w-2xl mx-auto mb-12"
+        >
+          See how Nexora is helping teams simplify their operations, accelerate sales pipelines, and scale effortlessly.
+        </motion.p>
 
-                <div className="flex items-center gap-4 relative z-10 mt-auto">
-                  <div className={cn("flex size-12 items-center justify-center rounded-full text-sm font-bold shadow-lg", testimonial.color)}>
-                    {testimonial.initials}
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-white">{testimonial.name}</h4>
-                    <p className="text-sm text-white/50">{testimonial.role}</p>
-                  </div>
-                </div>
-
-                {/* Simulated Company Logo */}
-                <div className="absolute bottom-6 right-6 text-xs font-bold uppercase tracking-widest text-white/20">
-                  {testimonial.company}
-                </div>
+        {/* 3. GSAP Count-up Trust Metrics Header Bar */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 p-6 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-xl shadow-xl"
+        >
+          {trustMetrics.map((metric) => (
+            <div key={metric.id} className="text-center p-3 rounded-xl bg-white/[0.02] border border-white/5">
+              <div className="text-2xl md:text-3xl font-extrabold tracking-tight text-white mb-1 flex items-baseline justify-center gap-0.5">
+                {metric.prefix}
+                <GSAPTrustCounter metric={metric} containerRef={sectionRef} />
+                <span className="text-brand-400">{metric.suffix}</span>
               </div>
-            </motion.div>
+              <div className="text-[11px] font-semibold uppercase tracking-wider text-white/50">
+                {metric.label}
+              </div>
+            </div>
           ))}
         </motion.div>
       </div>
+
+      {/* Testimonials Display Engine */}
+      {prefersReducedMotion ? (
+        /* 10. Responsive Static Grid Fallback for Reduced Motion */
+        <div className="nexora-container relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto py-6">
+          {testimonials.map((testimonial) => (
+            <TestimonialCard
+              key={testimonial.id}
+              testimonial={testimonial}
+              className="w-full"
+            />
+          ))}
+        </div>
+      ) : (
+        /* 1. GSAP Infinite Marquee Carousel with Variable Speed */
+        <div
+          className="relative w-full overflow-hidden flex py-8 group/track"
+          onMouseEnter={handleTrackMouseEnter}
+          onMouseLeave={handleTrackMouseLeave}
+        >
+          {/* Side Fade Gradient Masks */}
+          <div className="absolute inset-y-0 left-0 w-16 md:w-48 bg-gradient-to-r from-brand-950 to-transparent z-20 pointer-events-none" />
+          <div className="absolute inset-y-0 right-0 w-16 md:w-48 bg-gradient-to-l from-brand-950 to-transparent z-20 pointer-events-none" />
+
+          {/* Continuous GSAP Marquee Track */}
+          <div
+            ref={trackRef}
+            className="flex gap-6 md:gap-8 px-4 w-max"
+          >
+            {triplicatedTestimonials.map((testimonial, idx) => (
+              <TestimonialCard
+                key={`${testimonial.id}-${idx}`}
+                testimonial={testimonial}
+                onHoverStart={handleCardHoverStart}
+                onHoverEnd={handleCardHoverEnd}
+              />
+            ))}
+          </div>
+        </div>
+      )}
     </section>
   );
 }
