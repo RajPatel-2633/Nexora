@@ -205,30 +205,30 @@ export function TestimonialsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-xs font-semibold uppercase tracking-wider mb-4"
+          className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 section-label mb-3"
         >
           <Sparkles className="size-3.5" />
           <span>Customer Stories</span>
         </motion.div>
 
-        <motion.h3
+        <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="text-h2 text-white mb-6"
+          className="heading-xl text-white mb-4"
         >
-          Loved by thousands of fast-growing businesses
-        </motion.h3>
+          Loved by thousands of fast-growing teams
+        </motion.h2>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-lg text-white/60 max-w-2xl mx-auto mb-12"
+          className="body-lg text-slate-400 max-w-2xl mx-auto"
         >
-          See how Nexora is helping teams simplify their operations, accelerate sales pipelines, and scale effortlessly.
+          See how companies use Nexora to automate workflows, convert leads faster, and scale operations effortlessly.
         </motion.p>
 
         {/* 3. GSAP Count-up Trust Metrics Header Bar */}
@@ -241,7 +241,7 @@ export function TestimonialsSection() {
         >
           {trustMetrics.map((metric) => (
             <div key={metric.id} className="text-center p-3 rounded-xl bg-white/[0.02] border border-white/5">
-              <div className="text-2xl md:text-3xl font-extrabold tracking-tight text-white mb-1 flex items-baseline justify-center gap-0.5">
+              <div className="text-2xl md:text-3xl font-bold tracking-tight text-white mb-1 flex items-baseline justify-center gap-0.5">
                 {metric.prefix}
                 <GSAPTrustCounter metric={metric} containerRef={sectionRef} />
                 <span className="text-brand-400">{metric.suffix}</span>

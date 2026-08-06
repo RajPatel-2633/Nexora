@@ -65,8 +65,8 @@ export function Navbar({ navConfig = navigation, className }: NavbarProps) {
           className="absolute inset-x-0 top-0 mx-auto pointer-events-none transition-all"
         />
 
-        {/* Stable Content Grid — Anchored centered max-w-[1240px]. Navigation items NEVER shift horizontally while scrolling */}
-        <div className="relative z-10 w-full max-w-[1240px] mx-auto px-6 h-[68px] flex items-center justify-between pointer-events-auto">
+        {/* Full-Width Content Grid — Spans 100% width across the page */}
+        <div className="relative z-10 w-full px-6 md:px-8 lg:px-12 h-[68px] flex items-center justify-between pointer-events-auto">
           <NavbarLogo logo={navConfig.logo} isScrolled={isScrolled} />
 
           <nav

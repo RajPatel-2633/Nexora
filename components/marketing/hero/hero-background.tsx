@@ -73,7 +73,7 @@ export function HeroBackground({ className }: { className?: string }) {
         }}
       />
 
-      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-white" />
+      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-[#070913]" />
     </div>
   );
 }

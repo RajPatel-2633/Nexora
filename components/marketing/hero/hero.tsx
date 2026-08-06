@@ -3,8 +3,6 @@
 import { HeroBackground } from "./hero-background";
 import { HeroContent } from "./hero-content";
 import { HeroVisual } from "./hero-visual";
-import { HeroLogoCloud } from "./hero-logo-cloud";
-
 export function Hero() {
   return (
     <section
@@ -19,8 +17,6 @@ export function Hero() {
           <HeroContent />
           <HeroVisual className="mt-12 lg:mt-0" />
         </div>
-
-        <HeroLogoCloud className="lg:hidden" />
       </div>
     </section>
   );

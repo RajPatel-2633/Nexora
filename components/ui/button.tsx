@@ -9,18 +9,18 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          "bg-gradient-to-br from-[#6366F1] via-[#4F46E5] to-[#4338CA] text-white shadow-[0_4px_14px_0_rgba(99,102,241,0.35)] hover:shadow-[0_8px_24px_0_rgba(99,102,241,0.45)] hover:-translate-y-px active:translate-y-0",
+          "bg-gradient-to-br from-[#6366F1] via-[#4F46E5] to-[#4338CA] text-white font-semibold shadow-[0_4px_14px_0_rgba(99,102,241,0.35)] hover:shadow-[0_8px_24px_0_rgba(99,102,241,0.45)] hover:-translate-y-px active:translate-y-0",
         secondaryDark:
-          "border border-white/20 bg-transparent text-white hover:border-white/30 hover:bg-white/[0.06]",
+          "border border-white/20 bg-transparent text-white font-medium hover:border-white/30 hover:bg-white/[0.06]",
         ghost:
-          "text-white/80 hover:bg-white/[0.04] hover:text-white",
+          "text-white/80 font-medium hover:bg-white/[0.04] hover:text-white",
         glass:
-          "border border-white/10 bg-white/[0.06] text-white backdrop-blur-md hover:border-white/20 hover:bg-white/10",
+          "border border-white/10 bg-white/[0.06] text-white font-medium backdrop-blur-md hover:border-white/20 hover:bg-white/10",
       },
       size: {
         sm: "h-8 px-3.5 text-xs",
         md: "h-10 px-5",
-        lg: "h-12 px-7 text-[0.9375rem]",
+        lg: "h-11 px-6 text-[0.9375rem]",
       },
     },
     defaultVariants: {

@@ -50,7 +50,7 @@
   left: 0;
   right: 0;
   height: 120px;
-  background: var(--nexora-gradient-hero-to-light);
+  background: linear-gradient(180deg, transparent 0%, #070913 100%);
   pointer-events: none;
 }
 

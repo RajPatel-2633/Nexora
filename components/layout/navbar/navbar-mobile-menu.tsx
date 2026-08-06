@@ -137,14 +137,6 @@ export function NavbarMobileMenu({
                         )}
                       >
                         {link.label}
-                        {/* Dot indicator for active page */}
-                        {isActive && (
-                          <motion.span
-                            layoutId="mobileActiveDot"
-                            className="absolute -right-4 top-1/2 -translate-y-1/2 size-1.5 rounded-full bg-brand-500"
-                            transition={{ type: "spring", stiffness: 350, damping: 25 }}
-                          />
-                        )}
                       </Link>
                     </motion.li>
                   );

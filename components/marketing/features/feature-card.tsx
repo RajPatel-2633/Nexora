@@ -152,11 +152,11 @@ export function FeatureCard({
           >
             <Icon className="size-6" />
           </div>
-          <h3 className="text-2xl font-bold tracking-tight text-foreground">{title}</h3>
+          <h3 className="text-2xl font-semibold tracking-tight text-foreground">{title}</h3>
         </div>
 
         {/* Description Slot */}
-        <p className="mb-6 text-muted-foreground text-sm md:text-base leading-relaxed">
+        <p className="mb-6 text-muted-foreground text-sm md:text-base leading-relaxed max-w-[38ch]">
           {description}
         </p>
 
@@ -172,7 +172,7 @@ export function FeatureCard({
               >
                 <Check className={cn("size-3.5 font-bold", colors.text)} />
               </div>
-              <span className="text-sm font-medium text-foreground/85">{feature}</span>
+              <span className="text-sm font-normal text-foreground/85">{feature}</span>
             </li>
           ))}
         </ul>
@@ -189,13 +189,13 @@ export function FeatureCard({
           <a
             href={actionHref}
             className={cn(
-              "inline-flex items-center gap-1.5 text-xs font-bold transition-all duration-300 hover:gap-2.5",
+              "inline-flex items-center gap-1.5 text-xs font-medium transition-all duration-300 hover:gap-2.5",
               colors.cta
             )}
           >
             {actionText} <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" />
           </a>
-          <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
+          <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">
             Nexora Module
           </span>
         </div>

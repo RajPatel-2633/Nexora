@@ -23,16 +23,16 @@ export function NavbarLogo({ logo, isScrolled = false, className }: NavbarLogoPr
       aria-label={`${logo.label} — Home`}
     >
       <motion.span
-        className="flex size-8 items-center justify-center rounded-lg bg-gradient-to-br from-[#6366F1] to-[#4338CA] shadow-[0_4px_14px_0_rgba(99,102,241,0.35)]"
+        className="flex size-9 items-center justify-center rounded-lg bg-gradient-to-br from-[#6366F1] to-[#4338CA] shadow-[0_4px_14px_0_rgba(99,102,241,0.35)]"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.98 }}
         transition={{ type: "spring", stiffness: 400, damping: 25 }}
       >
-        <Sparkles className="size-4 text-white" aria-hidden="true" />
+        <Sparkles className="size-4.5 text-white" aria-hidden="true" />
       </motion.span>
       <motion.span
         className={cn(
-          "text-nav font-semibold tracking-tight text-white transition-opacity duration-300",
+          "text-xl font-bold tracking-tight text-white transition-opacity duration-300",
           isScrolled ? "opacity-100" : "opacity-95"
         )}
         whileHover={{ opacity: 1 }}

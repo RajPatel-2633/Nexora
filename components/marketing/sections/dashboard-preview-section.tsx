@@ -170,13 +170,13 @@ export function DashboardPreviewSection() {
 
       <div className="nexora-container relative z-10">
         <div className="mb-16 text-center max-w-3xl mx-auto">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-brand-500/20 bg-brand-500/10 px-3.5 py-1 text-xs font-semibold text-brand-600 tracking-wider uppercase mb-3">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-brand-500/20 bg-brand-500/10 px-3.5 py-1 section-label text-brand-600 mb-3">
             <Sparkles className="size-3.5 text-brand-500" /> Live Interactive CRM
           </span>
-          <h3 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-6">
+          <h2 className="heading-xl text-foreground mb-4">
             Production CRM Application Screen
-          </h3>
-          <p className="text-lg text-muted-foreground">
+          </h2>
+          <p className="body-lg text-slate-600">
             Experience our production-ready modular CRM dashboard with live storytelling animations & AI insights.
           </p>
         </div>

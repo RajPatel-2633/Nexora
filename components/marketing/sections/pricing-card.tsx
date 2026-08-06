@@ -75,7 +75,7 @@ export function PricingCard({
       {/* Top Header & Badge */}
       <div>
         <div className="flex items-center justify-between mb-4">
-          <h4 className="text-xl font-bold text-white group-hover:text-brand-300 transition-colors duration-200">
+          <h4 className="text-xl font-semibold text-white group-hover:text-brand-300 transition-colors duration-200">
             {plan.name}
           </h4>
 
@@ -87,7 +87,7 @@ export function PricingCard({
                 scale: [1, 1.03, 1],
               }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-brand-500 text-white text-[10px] font-extrabold uppercase tracking-wider shadow-lg shadow-brand-500/25 border border-brand-400/30"
+              className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-brand-500 text-white text-[10px] font-semibold uppercase tracking-wider shadow-lg shadow-brand-500/25 border border-brand-400/30"
             >
               <Sparkles className="size-3" />
               <span>{plan.badge}</span>
@@ -109,7 +109,7 @@ export function PricingCard({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -15 }}
                 transition={{ duration: 0.25, ease: "easeOut" }}
-                className="text-4xl md:text-5xl font-extrabold tracking-tight text-white"
+                className="text-4xl md:text-5xl font-bold tracking-tight text-white"
               >
                 ${price}
               </motion.span>
@@ -127,7 +127,7 @@ export function PricingCard({
           <Button
             variant={plan.highlighted ? "primary" : "glass"}
             className={cn(
-              "w-full py-6 text-sm font-bold transition-all duration-300 rounded-xl",
+              "w-full h-10 px-5 text-sm transition-all duration-300 rounded-xl",
               plan.highlighted
                 ? "bg-brand-500 hover:bg-brand-600 text-white shadow-lg shadow-brand-500/30"
                 : "bg-white/10 hover:bg-white/20 text-white border border-white/15"
@@ -139,7 +139,7 @@ export function PricingCard({
 
         {/* 4. Scannable Feature List with "Coming Soon" Badges */}
         <div className="space-y-3.5">
-          <div className="text-xs font-bold uppercase tracking-wider text-white/40 mb-3">
+          <div className="text-xs font-medium uppercase tracking-wider text-white/40 mb-3">
             What&apos;s included:
           </div>
 
@@ -148,7 +148,7 @@ export function PricingCard({
               <li
                 key={feature.name}
                 className={cn(
-                  "flex items-center justify-between gap-3 text-sm transition-colors duration-200",
+                  "flex items-center justify-between gap-3 text-sm font-normal leading-relaxed transition-colors duration-200",
                   feature.included
                     ? "text-white/90 group-hover:text-white"
                     : "text-white/35 line-through decoration-white/20"

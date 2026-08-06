@@ -126,30 +126,30 @@ export function PricingSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-xs font-semibold uppercase tracking-wider mb-4"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 section-label mb-4"
           >
             <Sparkles className="size-3.5" />
             <span>Simple pricing that scales with your business</span>
           </motion.div>
 
-          <motion.h3
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-h2 text-white mb-4"
+            className="heading-xl text-white mb-4"
           >
             Transparent plans for teams of all sizes
-          </motion.h3>
+          </motion.h2>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-lg text-white/60 font-normal"
+            className="body-lg text-slate-400 max-w-2xl mx-auto"
           >
-            Start free. Upgrade as your team grows.
+            No hidden fees. Every plan includes full CRM lead management, HRMS, and automated invoicing.
           </motion.p>
         </div>
 

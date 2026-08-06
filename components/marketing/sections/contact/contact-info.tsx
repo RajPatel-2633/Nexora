@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { Check, Mail, Phone, Sparkles } from "lucide-react";
-import { DemoSchedulerCard } from "./demo-scheduler-card";
 
 const benefits = [
   "Full platform walkthrough",
@@ -20,13 +19,13 @@ export function ContactInfo() {
       className="space-y-8"
     >
       <div>
-        <div className="inline-flex items-center gap-1.5 rounded-full border border-brand-500/20 bg-brand-500/10 px-3 py-1 mb-6 backdrop-blur-md text-brand-300 text-xs font-semibold uppercase tracking-wider">
+        <div className="inline-flex items-center gap-1.5 rounded-full border border-brand-500/20 bg-brand-500/10 px-3.5 py-1 mb-6 section-label text-brand-300">
           <Sparkles className="size-3.5" />
           <span>Get a Demo</span>
         </div>
 
-        {/* 10. High-Conversion Headline & Subtext */}
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 leading-tight text-white">
+        {/* High-Conversion Headline & Subtext */}
+        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 leading-tight text-white">
           Ready to transform your <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-purple-400 to-violet-400">business?</span>
         </h2>
 
@@ -47,46 +46,25 @@ export function ContactInfo() {
         ))}
       </ul>
 
-      {/* Demo Scheduling Card */}
-      <DemoSchedulerCard />
-
-      {/* 5. Glass Contact Cards with Subtle Hover Rotation */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <motion.a
+      {/* Subtle Flat Contact Links */}
+      <div className="pt-6 flex flex-wrap items-center gap-6 border-t border-white/10 text-xs font-medium text-white/60">
+        <a
           href="mailto:hello@nexora.com"
-          whileHover={{ y: -3 }}
-          className="group flex items-center gap-3.5 p-4 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md transition-all duration-300 hover:border-white/20 hover:bg-white/[0.06] hover:shadow-lg"
+          className="flex items-center gap-2 hover:text-white transition-colors duration-200"
         >
-          <motion.div
-            whileHover={{ rotate: 12 }}
-            transition={{ type: "spring", stiffness: 300 }}
-            className="p-3 rounded-xl bg-brand-500/10 text-brand-400 border border-brand-500/20"
-          >
-            <Mail className="size-5" />
-          </motion.div>
-          <div>
-            <div className="text-xs text-white/40 font-semibold uppercase tracking-wider mb-0.5">Email Us</div>
-            <div className="text-sm font-bold text-white group-hover:text-brand-300 transition-colors">hello@nexora.com</div>
-          </div>
-        </motion.a>
+          <Mail className="size-3.5 text-brand-400" />
+          <span>hello@nexora.com</span>
+        </a>
 
-        <motion.a
+        <span className="size-1 rounded-full bg-white/20 hidden sm:inline-block" />
+
+        <a
           href="tel:+18001234567"
-          whileHover={{ y: -3 }}
-          className="group flex items-center gap-3.5 p-4 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md transition-all duration-300 hover:border-white/20 hover:bg-white/[0.06] hover:shadow-lg"
+          className="flex items-center gap-2 hover:text-white transition-colors duration-200"
         >
-          <motion.div
-            whileHover={{ rotate: 12 }}
-            transition={{ type: "spring", stiffness: 300 }}
-            className="p-3 rounded-xl bg-purple-500/10 text-purple-400 border border-purple-500/20"
-          >
-            <Phone className="size-5" />
-          </motion.div>
-          <div>
-            <div className="text-xs text-white/40 font-semibold uppercase tracking-wider mb-0.5">Call Us</div>
-            <div className="text-sm font-bold text-white group-hover:text-purple-300 transition-colors">+1 (800) 123-4567</div>
-          </div>
-        </motion.a>
+          <Phone className="size-3.5 text-purple-400" />
+          <span>+1 (800) 123-4567</span>
+        </a>
       </div>
     </motion.div>
   );

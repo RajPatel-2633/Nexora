@@ -84,14 +84,6 @@ export function IntegrationNode({
             style={{ backgroundColor: brandColor }}
           />
 
-          {/* Featured Ribbon Halo */}
-          {isFeatured && (
-            <span
-              className="absolute -top-1 -right-1 z-30 size-3.5 rounded-full ring-4 ring-background"
-              style={{ backgroundColor: brandColor }}
-            />
-          )}
-
           {/* Main Icon Card Container */}
           <motion.div
             whileHover={{ scale: 1.15, y: -4 }}

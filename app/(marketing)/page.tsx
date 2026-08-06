@@ -13,7 +13,7 @@ export default function HomePage() {
     <>
       <Hero />
       
-      <TrustedCompaniesMarquee className="bg-background border-b border-white/5" />
+      <TrustedCompaniesMarquee />
 
       <FeaturesSection />
 

@@ -404,7 +404,7 @@ export function WhyChooseSection() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-600 text-xs font-semibold uppercase tracking-wider mb-4"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 section-label text-brand-600 mb-4"
           >
             <Sparkles className="size-3.5" />
             <span>Why Choose Nexora</span>
@@ -415,7 +415,7 @@ export function WhyChooseSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-h2 text-on-light mb-6"
+            className="heading-xl text-on-light mb-6"
           >
             The all-in-one platform that drives results
           </motion.h3>

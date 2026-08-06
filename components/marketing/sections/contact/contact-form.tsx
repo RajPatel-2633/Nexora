@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { DemoSchedulerCard } from "./demo-scheduler-card";
 import type { ContactFormData, FormStatus, FormErrors } from "@/types/domain/contact";
 
 export function ContactForm() {
@@ -95,6 +96,13 @@ export function ContactForm() {
               </motion.div>
             )}
           </AnimatePresence>
+
+          {/* 1. Conversational Demo Availability Card (CRO Priming) */}
+          <DemoSchedulerCard />
+
+          <p className="text-xs text-white/50 mb-5 font-normal">
+            Most demos are scheduled within 24 hours.
+          </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
             {/* 3. Floating Label Input: Full Name */}
@@ -202,7 +210,7 @@ export function ContactForm() {
             whileHover={status === "idle" ? { scale: 1.02 } : undefined}
             whileTap={status === "idle" ? { scale: 0.98 } : undefined}
             className={cn(
-              "group relative w-full overflow-hidden rounded-xl px-6 py-4 font-bold text-white shadow-xl transition-all duration-300 flex items-center justify-center gap-2",
+              "group relative w-full overflow-hidden rounded-xl px-6 py-3 font-semibold text-white shadow-xl transition-all duration-300 flex items-center justify-center gap-2",
               status === "success"
                 ? "bg-emerald-600 shadow-emerald-500/30"
                 : "bg-gradient-to-r from-brand-600 via-indigo-600 to-purple-600 hover:brightness-110 shadow-brand-500/30"

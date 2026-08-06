@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Users, BarChart3, Building2, FileText } from "lucide-react";
 
@@ -75,39 +76,55 @@ export function ZapierLogo({ className = "size-8" }: { className?: string }) {
   );
 }
 
-export function IndiaMartLogo({ className = "h-8" }: { className?: string }) {
+export function IndiaMartLogo({ className = "size-8" }: { className?: string }) {
   return (
-    <div className={cn("inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#2E3192]/20 border border-[#2E3192]/40 text-white font-extrabold text-sm tracking-tight", className)}>
-      <span className="size-2 rounded-full bg-[#00AEEF]" />
-      <span>IndiaMART</span>
-    </div>
+    <Image
+      src="https://www.google.com/s2/favicons?domain=indiamart.com&sz=128"
+      alt="IndiaMART"
+      width={36}
+      height={36}
+      className={cn("size-8 object-contain rounded-md", className)}
+      unoptimized
+    />
   );
 }
 
-export function HousingLogo({ className = "h-8" }: { className?: string }) {
+export function HousingLogo({ className = "size-8" }: { className?: string }) {
   return (
-    <div className={cn("inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#6B21A8]/20 border border-[#6B21A8]/40 text-white font-extrabold text-sm tracking-tight", className)}>
-      <span className="size-2 rounded-full bg-[#A855F7]" />
-      <span>Housing.com</span>
-    </div>
+    <Image
+      src="https://www.google.com/s2/favicons?domain=housing.com&sz=128"
+      alt="Housing.com"
+      width={36}
+      height={36}
+      className={cn("size-8 object-contain rounded-md", className)}
+      unoptimized
+    />
   );
 }
 
-export function Acres99Logo({ className = "h-8" }: { className?: string }) {
+export function Acres99Logo({ className = "size-8" }: { className?: string }) {
   return (
-    <div className={cn("inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#E31E24]/20 border border-[#E31E24]/40 text-white font-extrabold text-sm tracking-tight", className)}>
-      <span className="size-2 rounded-full bg-[#EF4444]" />
-      <span>99acres</span>
-    </div>
+    <Image
+      src="https://www.google.com/s2/favicons?domain=99acres.com&sz=128"
+      alt="99acres"
+      width={36}
+      height={36}
+      className={cn("size-8 object-contain rounded-md", className)}
+      unoptimized
+    />
   );
 }
 
-export function MagicBricksLogo({ className = "h-8" }: { className?: string }) {
+export function MagicBricksLogo({ className = "size-8" }: { className?: string }) {
   return (
-    <div className={cn("inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FF0000]/20 border border-[#FF0000]/40 text-white font-extrabold text-sm tracking-tight", className)}>
-      <span className="size-2 rounded-full bg-[#F87171]" />
-      <span>MagicBricks</span>
-    </div>
+    <Image
+      src="https://www.google.com/s2/favicons?domain=magicbricks.com&sz=128"
+      alt="MagicBricks"
+      width={36}
+      height={36}
+      className={cn("size-8 object-contain rounded-md", className)}
+      unoptimized
+    />
   );
 }
 

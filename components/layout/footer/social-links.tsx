@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { Github, Linkedin, Youtube } from "lucide-react";
 import type { SocialItem } from "@/types/domain/footer";
 
-// Custom X (Twitter) Logo SVG
 function XLogo({ className = "size-4" }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="currentColor">
@@ -30,9 +29,9 @@ export function SocialLinks() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label={item.name}
-          whileHover={{ scale: 1.08, y: -2 }}
+          whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.2 }}
-          className="flex size-10 items-center justify-center rounded-xl bg-white/[0.04] border border-white/10 text-white/60 transition-colors duration-200 hover:border-brand-500/40 hover:bg-brand-500/10 hover:text-brand-300 shadow-sm"
+          className="flex size-[42px] items-center justify-center rounded-xl bg-white/[0.04] border border-white/10 text-slate-400 transition-colors duration-200 hover:border-brand-500/40 hover:bg-brand-500/10 hover:text-white outline-none focus-visible:ring-2 focus-visible:ring-brand-400 shadow-sm"
         >
           {item.iconName === "github" && <Github className="size-4" />}
           {item.iconName === "linkedin" && <Linkedin className="size-4" />}

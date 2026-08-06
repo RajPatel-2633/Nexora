@@ -68,34 +68,28 @@ export function useNavbarScroll(mobileOpen: boolean = false) {
       glass.style.borderBottom = `1px solid rgba(255, 255, 255, ${borderOpacity})`;
       glass.style.boxShadow = "none";
     } else {
-      // Desktop behavior: Glass backdrop card morphs independently underneath anchored 1240px content
-      const navHeight = 78;
-      const cardHeight = gsap.utils.interpolate(68, 60, p);
-      const cardWidth = gsap.utils.interpolate(98, 94, p);
-      const cardMaxW = gsap.utils.interpolate(1320, 1240, p);
-      const marginTop = gsap.utils.interpolate(0, 10, p);
-      const bgOpacity = gsap.utils.interpolate(0, 0.60, p);
+      // Desktop behavior: Full-width glass navbar header spanning 100% screen width
+      const navHeight = 68;
+      const bgOpacity = gsap.utils.interpolate(0, 0.75, p);
       const blur = gsap.utils.interpolate(0, 20, p);
-      // Initial 8px radius -> 22px rounded glass card (NO translateY movement!)
-      const borderRadius = gsap.utils.interpolate(8, 22, p);
       const borderOpacity = gsap.utils.interpolate(0, 0.08, p);
-      const shadow1Opacity = gsap.utils.interpolate(0, 0.16, p);
-      const shadow2Opacity = gsap.utils.interpolate(0, 0.06, p);
+      const shadowOpacity = gsap.utils.interpolate(0, 0.12, p);
 
       nav.style.height = `${navHeight}px`;
 
-      glass.style.height = `${cardHeight}px`;
-      glass.style.width = `${cardWidth}%`;
-      glass.style.maxWidth = `${cardMaxW}px`;
-      glass.style.marginTop = `${marginTop}px`;
-      glass.style.transform = "none"; // NO translateY movement
+      glass.style.height = `${navHeight}px`;
+      glass.style.width = "100%";
+      glass.style.maxWidth = "100%";
+      glass.style.marginTop = "0px";
+      glass.style.transform = "none";
       glass.style.backgroundColor = `rgba(10, 12, 20, ${bgOpacity})`;
       glass.style.backdropFilter = p > 0.01 ? `blur(${blur}px) saturate(180%)` : "none";
       (glass.style as any).webkitBackdropFilter = p > 0.01 ? `blur(${blur}px) saturate(180%)` : "none";
-      glass.style.borderRadius = `${borderRadius}px`;
-      glass.style.border = `1px solid rgba(255, 255, 255, ${borderOpacity})`;
+      glass.style.borderRadius = "0px";
+      glass.style.border = "none";
+      glass.style.borderBottom = `1px solid rgba(255, 255, 255, ${borderOpacity})`;
       glass.style.boxShadow = p > 0.01 
-        ? `0 8px 30px rgba(0, 0, 0, ${shadow1Opacity}), 0 2px 8px rgba(0, 0, 0, ${shadow2Opacity})` 
+        ? `0 4px 20px rgba(0, 0, 0, ${shadowOpacity})` 
         : "none";
     }
   }, [mobileOpen]);

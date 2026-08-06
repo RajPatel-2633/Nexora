@@ -101,14 +101,14 @@ export function IntegrationsSection() {
       <div className="nexora-container relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-brand-500/20 bg-brand-500/10 px-3.5 py-1 text-xs font-semibold text-brand-600 tracking-wider uppercase mb-3">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-brand-500/20 bg-brand-500/10 px-3.5 py-1 section-label text-brand-600 mb-3">
             <Sparkles className="size-3.5 text-brand-500" /> Unified Data Layer
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-6">
+          <h2 className="heading-xl text-foreground mb-4">
             Every Lead Source. One Intelligent Workspace.
           </h2>
-          <p className="text-lg text-muted-foreground leading-relaxed">
-            Connect Facebook Lead Ads, IndiaMART, 99acres, Housing, Google Ads, WhatsApp and dozens of other platforms into a single AI-powered workflow.
+          <p className="body-lg text-slate-600">
+            Connect Meta, IndiaMART, Housing.com, 99acres, and WhatsApp — automatically route and enrich leads into your CRM.
           </p>
         </div>
 

@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { FooterCTA } from "./footer/footer-cta";
 import { FooterBrand } from "./footer/footer-brand";
 import { FooterLinks } from "./footer/footer-links";
 import { FooterBottom } from "./footer/footer-bottom";
@@ -35,9 +34,6 @@ export function Footer() {
       </div>
 
       <div className="nexora-container relative z-10">
-        {/* 1. Final Conclusion CTA Banner */}
-        <FooterCTA />
-
         {/* Multi-Column Main Links Grid */}
         <nav aria-label="Footer navigation" className="flex flex-col lg:flex-row justify-between items-start gap-12 lg:gap-16 pb-16">
           <FooterBrand />
