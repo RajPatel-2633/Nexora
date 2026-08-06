@@ -17,6 +17,7 @@ export type IntegrationNodeProps = {
   isFeatured?: boolean;
   href?: string;
   isConnected?: boolean;
+  isDimmed?: boolean;
   variant?: "orbital" | "card"; // Orbital for landing hero/showcase, card for CRM management
   onHoverChange?: (isHovered: boolean) => void;
   className?: string;
@@ -33,6 +34,7 @@ export function IntegrationNode({
   isFeatured,
   href = "#",
   isConnected = false,
+  isDimmed = false,
   variant = "orbital",
   onHoverChange,
   className,
@@ -60,12 +62,12 @@ export function IntegrationNode({
     return (
       <motion.div
         className={cn(
-          "absolute -translate-x-1/2 -translate-y-1/2 transition-all duration-200",
-          isHovered ? "z-50" : "z-20",
+          "absolute -translate-x-1/2 -translate-y-1/2 transition-all duration-300",
+          isHovered ? "z-50 opacity-100" : isDimmed ? "z-10 opacity-35" : "z-20 opacity-100",
           className
         )}
         style={styleObj}
-        animate={{ y: [0, -8, 0] }}
+        animate={{ y: [0, -6, 0] }}
         transition={{
           duration: 3.5 + (id.length % 3),
           repeat: Infinity,
@@ -86,13 +88,13 @@ export function IntegrationNode({
 
           {/* Main Icon Card Container */}
           <motion.div
-            whileHover={{ scale: 1.15, y: -4 }}
+            whileHover={{ scale: 1.1, y: -3 }}
             transition={{ type: "spring", stiffness: 350, damping: 20 }}
-            className="relative flex size-14 md:size-16 items-center justify-center rounded-2xl border border-white/10 bg-card/90 shadow-xl backdrop-blur-md transition-all duration-300 group-hover:border-white/30 group-hover:shadow-2xl"
+            className="relative flex size-13 md:size-15 items-center justify-center rounded-2xl border border-slate-200/80 bg-white/95 shadow-md backdrop-blur-md transition-all duration-300 group-hover:border-white/30 group-hover:shadow-xl"
             style={{
               boxShadow: isHovered
-                ? `0 12px 30px -6px ${brandColor}40`
-                : "0 4px 20px -2px rgba(0,0,0,0.1)",
+                ? `0 12px 30px -6px ${brandColor}35`
+                : "0 4px 16px -2px rgba(0,0,0,0.06)",
             }}
           >
             <div className="flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
@@ -100,16 +102,16 @@ export function IntegrationNode({
             </div>
           </motion.div>
 
-          {/* Hover Tooltip Card (Positioned ABOVE logo) */}
+          {/* Hover Tooltip Card (Aligned left-0 on mobile, centered on desktop to prevent left edge clipping) */}
           <motion.div
-            initial={{ opacity: 0, y: -8, scale: 0.95 }}
+            initial={{ opacity: 0, y: -6, scale: 0.95 }}
             animate={{
               opacity: isHovered ? 1 : 0,
-              y: isHovered ? 0 : -8,
+              y: isHovered ? 0 : -6,
               scale: isHovered ? 1 : 0.95,
             }}
             transition={{ duration: 0.2 }}
-            className="pointer-events-none absolute bottom-full mb-3 z-50 w-48 rounded-xl border border-white/15 bg-slate-950/95 p-3 shadow-2xl backdrop-blur-xl text-left"
+            className="pointer-events-none absolute bottom-full mb-2.5 z-50 w-44 left-0 md:left-1/2 md:-translate-x-1/2 rounded-xl border border-white/15 bg-slate-950/95 p-3 shadow-2xl backdrop-blur-xl text-left"
           >
             <div className="flex items-center justify-between mb-1">
               <span className="text-xs font-bold text-white">{name}</span>

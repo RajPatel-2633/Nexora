@@ -96,10 +96,10 @@ export function TrustedCompaniesMarquee({ className }: { className?: string }) {
 
       {/* Header framing */}
       <div className="nexora-container text-center mb-10 md:mb-12 relative z-10">
-        <h3 className="text-xs md:text-sm font-bold uppercase tracking-widest text-brand-400 mb-2.5">
+        <h3 className="text-xs md:text-sm section-label text-brand-400 mb-2.5">
           Ecosystem Integrations
         </h3>
-        <p className="text-2xl md:text-3xl font-extrabold text-white tracking-tight">
+        <p className="text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight" style={{ fontWeight: 700 }}>
           Works with the platforms your teams already rely on.
         </p>
       </div>

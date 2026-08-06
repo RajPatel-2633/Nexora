@@ -16,7 +16,6 @@ export interface AttendanceWidgetProps {
 }
 
 export function AttendanceWidget({
-  variant = "compact",
   animated = true,
   loading = false,
   empty = false,

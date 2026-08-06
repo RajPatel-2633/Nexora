@@ -9,11 +9,12 @@ import { cn } from "@/lib/utils";
 type NavbarCtaProps = {
   label: string;
   href: string;
+  isScrolled?: boolean;
   onNavigate?: () => void;
   className?: string;
 };
 
-export function NavbarCta({ label, href, onNavigate, className }: NavbarCtaProps) {
+export function NavbarCta({ label, href, isScrolled, onNavigate, className }: NavbarCtaProps) {
   return (
     <motion.div
       whileHover={{ scale: 1.02 }}
@@ -25,7 +26,8 @@ export function NavbarCta({ label, href, onNavigate, className }: NavbarCtaProps
         variant="primary"
         size="sm"
         className={cn(
-          "group relative overflow-hidden text-sm font-semibold transition-all duration-300 shadow-md shadow-brand-500/20 h-10 px-5 rounded-lg",
+          "group relative overflow-hidden text-sm font-semibold transition-all duration-300 h-10 px-5 rounded-lg",
+          isScrolled ? "shadow-lg shadow-brand-500/30" : "shadow-md shadow-brand-500/20",
           className
         )}
       >

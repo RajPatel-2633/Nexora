@@ -30,8 +30,8 @@ export const navigation: NavConfig = {
   links: [
     { label: "Features", href: "#features", isSection: true },
     { label: "Integrations", href: "#integrations", isSection: true },
+    { label: "Why Nexora", href: "#why-choose", isSection: true },
     { label: "Pricing", href: "#pricing", isSection: true },
-    { label: "About", href: "#about", isSection: true },
   ],
   cta: {
     label: "Get Started",

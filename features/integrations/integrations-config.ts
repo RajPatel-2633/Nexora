@@ -120,7 +120,7 @@ export const outputModulesConfig: IntegrationConfig[] = [
     description: "Auto-assign leads, track deal stages & manage pipeline.",
     role: "output",
     category: "Core System",
-    connectionLabel: "Pipeline Auto-Assign",
+    connectionLabel: "Lead Routing",
   },
   {
     id: "analytics",
@@ -140,7 +140,7 @@ export const outputModulesConfig: IntegrationConfig[] = [
     description: "Auto-schedule site visits & sync agent workloads.",
     role: "output",
     category: "Core System",
-    connectionLabel: "Agent Workload",
+    connectionLabel: "CRM Pipeline",
   },
   {
     id: "invoicing",
@@ -150,7 +150,7 @@ export const outputModulesConfig: IntegrationConfig[] = [
     description: "Draft invoices & sync payment milestones automatically.",
     role: "output",
     category: "Core System",
-    connectionLabel: "Milestone Invoice",
+    connectionLabel: "Invoices",
   },
 ];
 

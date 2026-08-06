@@ -152,7 +152,7 @@ export function FeatureCard({
           >
             <Icon className="size-6" />
           </div>
-          <h3 className="text-2xl font-semibold tracking-tight text-foreground">{title}</h3>
+          <h3 className="text-2xl font-bold tracking-tight text-foreground" style={{ fontWeight: 700 }}>{title}</h3>
         </div>
 
         {/* Description Slot */}

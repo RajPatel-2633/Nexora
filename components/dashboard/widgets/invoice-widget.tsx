@@ -16,7 +16,6 @@ export interface InvoiceWidgetProps {
 }
 
 export function InvoiceWidget({
-  variant = "compact",
   animated = true,
   loading = false,
   empty = false,
